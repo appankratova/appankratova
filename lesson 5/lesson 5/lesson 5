@@ -1,0 +1,35 @@
+import re
+import csv
+import json
+
+"""
+Найдите информацию об организациях:
+a. Получите список ИНН из файла «traders.txt»;
+b. Найдите информацию об организациях с этими ИНН в файле
+«traders.json»;
+c. Сохраните информацию об ИНН, ОГРН и адресе организаций из файла
+«traders.txt» в файл «traders.csv».
+"""
+import json
+
+
+def task_1():
+    with open("traders.txt", "r") as f:
+        inns = [i.rstrip() for i in f.readlines()]
+    with open("traders.json", "r") as f:
+        traders = [i for i in json.load(f) if i['inn'] in inns]
+    with open("traders.csv", 'w', newline='') as f:
+        writer = csv.writer(f, delimiter=';')
+        writer.writerow(['INN', 'OGRN', 'ADDRESS'])
+        for i in traders:
+            writer.writerow([i['inn'], i['ogrn'], i['address']])
+
+
+def main() -> object:
+    pass
+    task_1()
+
+
+if __name__ == "__main__":
+    main()
+    print("stop")
